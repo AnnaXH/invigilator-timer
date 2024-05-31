@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Invigilation Timer</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<h1>College Exam Invigilation Timer</h1>
+<section class="setup">
+  <div>
+    Writing time: <input type="number" name="hours" id="total_writing_hours"> hr <input type="number" name="minutes" id="total_writing_minutes"> mins
+  </div>
+  <div>
+    Resting time: <input type="number" name="hours" id="total_rest_hours"> hr <input type="number" name="minutes" id="total_rest_minutes"> mins
+  </div>
+  <button id="set_time">Set</button>
+</section>
+
+<section class="time">
+  <h2>Current Time</h2>
+  <div class="time_display" id="current_time">
+      <div class="clock_box">
+        <p class="clock_time" id="current_hours"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="clock_box">
+        <p class="clock_time" id="current_minutes"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="clock_box">
+        <p class="clock_time" id="current_seconds"></p>
+    </div>
+  </div>
+</section>
+
+  <!-- <div class="timer">
+    <h3>The challenge Lorem is in:</h3>
+    <div class="clock">
+      <div class="clock_box black-white">
+        <p class="clock_time" id="days"></p>
+        <p class="clock_duration">days</p>
+      </div>
+      <div class="clock_box ">
+        <p class="clock_time" id="hours"></p>
+        <p class="clock_duration">hours</p>
+      </div>
+      <p class="dots">:</p>
+      <div class="clock_box ">
+        <p class="clock_time" id="minutes"></p>
+        <p class="clock_duration">minutes</p>
+      </div>
+      <p class="dots">:</p>
+      <div class="clock_box ">
+        <p class="clock_time" id="seconds"></p>
+        <p class="clock_duration">seconds</p>
+      </div>
+
+    </div>
+  </div> -->
+
+<section class="timers">
+  <div class="timer_block current" id="writing_time">
+    <h2>Writing Time Remaining</h2>
+    <div class="time_display">
+      <div class="counter_box ">
+        <p class="counter_time" id="writing_hours"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="counter_box ">
+        <p class="counter_time" id="writing_minutes"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="counter_box ">
+        <p class="counter_time" id="writing_seconds"></p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="timer_block" id="rest_time">
+    <h2>Rest Time Remaining</h2>
+    <div class="time_display">
+      <div class="counter_box ">
+        <p class="counter_time" id="rest_hours"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="counter_box ">
+        <p class="counter_time" id="rest_minutes"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="counter_box ">
+        <p class="counter_time" id="rest_seconds"></p>
+      </div>
+    </div>
+
+  </div>
+<button id="switch">Change to rest / writing</button>
+</section>
+
+<section class="time">
+  <h2>End Time</h2>
+  <div class="time_display" id="end_time">
+      <div class="clock_box ">
+        <p class="clock_time" id="end_hours"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="clock_box ">
+        <p class="clock_time" id="end_minutes"></p>
+      </div>
+      <p class="dots">:</p>
+      <div class="clock_box ">
+        <p class="clock_time" id="end_seconds"></p>
+    </div>
+    <button id="pause">Pause</button>
+  </div>
+
+</section>
+<!-- partial -->
+  <script  src="./timer_script.js"></script>
+
+</body>
+</html>

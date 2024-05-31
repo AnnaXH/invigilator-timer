@@ -1,0 +1,183 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Roboto:wght@700&display=swap");
+body {
+  display: grid;
+  place-items: center;
+  height: 90vh;
+  font-family: "Nunito Sans", sans-serif;
+  color: #002e46;
+}
+
+.current, .current.timer_block {
+  transform: scale(1.2); /* Scales everything up by 20% */
+  transform-origin: center; /* Keeps the scaling centered */
+  margin-right: calc(0.2 * 10px); 
+  opacity: 1;
+}
+
+.countdown {
+  background: #eee;
+  height: 287px;
+  width: 1440px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10rem;
+  flex-wrap: wrap;
+}
+
+.time_display {
+  /* //flex: 1; */
+  //border: 1px solid red;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  //align-content: space-around;
+}
+
+.timer_block{
+  background-color: #f0f0f0;
+  transform: scale(0.9);
+  opacity: 0.6;
+  padding: 30px;
+  border: 5px solid #ccc;
+  flex: 1 1 calc(50% - 20px); /* Two equal-width columns with gap adjustment */
+  box-sizing: border-box; /* Ensures padding and border are included in the width calculation */
+}
+
+
+#switch {
+  margin: 30px;
+
+}
+.timer h3 {
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.signup h1 {
+  max-width: 350px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 26px;
+}
+
+input {
+  width: 20%;
+}
+
+
+.btn {
+  display: inline-block;
+  min-width: 280px;
+  padding: 10px 28px;
+  background: #009edb;
+  font-size: 26px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+
+.setup {
+  display: flex;
+}
+
+.counter{
+  max-width: fit-content;
+  gap: 0.75em;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+}
+
+.counter_box,
+.clock_box {
+  text-align: center;
+  width: 87px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0.25rem;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.counter_box {
+  background: white;
+}
+
+.clock_box {
+  background: #BDBDBD;
+}
+
+/* .counter_time {
+  font-size: 1.5em;
+  margin: 0;
+} */
+
+
+.counter_time, .clock_time {
+  font-size: 3rem;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.counter_duration {
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  margin: 0;
+  padding: 0;
+  color: #eee;
+}
+
+
+.timers{
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping to the next line */
+  gap: 20px; /* Space between columns */
+  padding: 20px;
+}
+/* HELPERS */
+
+.dots {
+  font-size: 52px;
+  color: #002e46;
+  margin: 0 5px; /* Space between the dots and counter boxes */
+  padding: 0;
+}
+
+.exp {
+  font-size: 52px;
+  font-family: "Roboto", sans-serif;
+}
+
+.black-white {
+  background: linear-gradient(
+    to top,
+    #002e46 0%,
+    #002e46 50%,
+    #4d707f 50%,
+    #4d707f 100%
+  );
+}
+
+.sky-blue {
+  background: linear-gradient(
+    to top,
+    #009edb 0%,
+    #009edb 50%,
+    rgba(127, 206, 236, 0.95) 50%,
+    rgba(127, 206, 236, 0.95) 100%
+  );
+}
+
+.shortTime {
+  background-color: #BA68C8;
+}
