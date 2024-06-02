@@ -42,7 +42,7 @@ Prerequisite:
    - Both timers are in the panels in the middle, displaying the remaining hours, minutes, and seconds. The active timer will be enlarged and updated every second.
    - The end time of the exam will be displayed at the bottom panel. It will also be updated when the rest  timer is active.
    - When there is 30 min remaining for the writing time the writing time timer will turn purple to remind you to announce this to the candidate.
-   - When the time is up the writing time timer will turn red to indicate you need to announce the end of the exam. (work in progress)
+   - When the time is up the writing time timer will turn red to indicate you need to announce the end of the exam.
 
 4. **Changing between timers:**
    - When the candidate requests a break, press the `Change to rest / writing` button to switch to the rest timer. The countdown for the exam time will be paused and the countdown for the rest time will start.

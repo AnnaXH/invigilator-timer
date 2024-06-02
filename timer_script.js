@@ -165,8 +165,10 @@ class WritingTimer extends Timer {
     return (hours * 60 + minutes ) * 60000
   }
   function updateEndTime(){
-    const endTime = new Date(calculateEndTime(writingTimer));
-    updateTime(endTime,'end');
+    if (!writingTimer.isCompleted){
+      const endTime = new Date(calculateEndTime(writingTimer));
+      updateTime(endTime,'end');
+    }
   }
 
   function updateTimers(){
@@ -185,6 +187,11 @@ class WritingTimer extends Timer {
     writingTimer.update();
     if (!writingTimeBlock.classList.contains('shortTime') && writingTimer.shortInTime) {
         writingTimeBlock.classList.add('shortTime');
+
+    }
+
+    if (!writingTimeBlock.classList.contains('examEnded') && writingTimer.checkCompleted()) {
+      writingTimeBlock.classList.add('examEnded');
 
     }
   }

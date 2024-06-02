@@ -233,4 +233,6 @@ input {
   background-color: #BA68C8;
 }
 
-
+.examEnded {
+  background-color: #ff6666  !important;
+}
