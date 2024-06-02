@@ -52,5 +52,9 @@ Prerequisite:
 
 ## Known issues
 - the only way to reset the timer is to refresh the page
-- Switch button is not automatically disabled if no rest time is allowed for the exam
-- Instead of remain a constant, end time will become the current time when the writing time timer runs out
+
+## Work in progress:
+- allow display of the used time as well as the remaining time
+- enable pausing of the exam (possibly due to emergencies such as fire alarm)
+- display the exam log of pausing and resuming (useful for timing yourself)
+- calculator for the times from exam arrangement: normally this is provided but in some case you need to work out by yourself, which might be painful...

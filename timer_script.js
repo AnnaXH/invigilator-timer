@@ -31,6 +31,9 @@ class Timer {
     updateTotalTime(totalTime){
         this.totalTime = totalTime;
         this.remainingTime = totalTime;
+        if (totalTime == 0) {
+          this.isCompleted = true;
+        }
     }
 
 
@@ -224,6 +227,8 @@ refershTime = 500;
     writingTimer.displayCallback();
     writingTimer.start();
     setInterval(updateTimers, refershTime);
+    const button = document.getElementById('set_time');
+    button.disabled = true;
   });
 
 
