@@ -1,11 +1,4 @@
-// TODO: create writing timer timer and resting time timer when click the set button
-// TODO: 
-// [Done] to display current time
-// to display a fixed time when the timer is not active
-// to do the count down when the timer active
-// to attribute the current class to the corresponding display block when the timer is active and remove when it is not
-// to 'switch' timer upon clicking the switch button
-// to update and display the end time whenever rest time is updated and the timer is initialized
+// Copyright (C) 2024  Anna Hu
 
 
 class Timer {
