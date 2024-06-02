@@ -33,6 +33,8 @@ class Timer {
         this.remainingTime = totalTime;
         if (totalTime == 0) {
           this.isCompleted = true;
+        } else {
+          this.isCompleted = false;
         }
     }
 
@@ -195,7 +197,13 @@ class WritingTimer extends Timer {
 
     if (!writingTimeBlock.classList.contains('examEnded') && writingTimer.checkCompleted()) {
       writingTimeBlock.classList.add('examEnded');
+      document.body.style.background=window.getComputedStyle(writingTimeBlock).backgroundColor;      // document.body.style.background ="#292a70";
+      const button = document.getElementById('switch');
+      if (!restTimer.checkCompleted()) {
+        button.disabled = true;
+        button.textContent = 'Exam ended';
 
+      }
     }
   }
 
@@ -229,6 +237,9 @@ refershTime = 500;
     setInterval(updateTimers, refershTime);
     const button = document.getElementById('set_time');
     button.disabled = true;
+    setInterval(updateEndTime, refershTime);
+    setInterval(disableSwitch, refershTime);
+    document.getElementById('switch').disabled = false;
   });
 
 
@@ -256,8 +267,6 @@ refershTime = 500;
   // Update the time every second
   
   setInterval(updateCurrentTime, refershTime);
-  setInterval(disableSwitch, refershTime);
 
-  setInterval(updateEndTime, refershTime);
 
 

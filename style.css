@@ -90,8 +90,8 @@ input {
 .counter_box,
 .clock_box {
   text-align: center;
-  width: 87px;
-  height: 100px;
+  width: 70px;
+  height: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -226,9 +226,11 @@ input {
 }
 
 .shortTime {
-  background-color: #BA68C8;
+  background-color: #8c69c9; /* #bb69c9; */
+ 
 }
 
 .examEnded {
-  background-color: #ff6666  !important;
+  background-color: #5b2970 !important;
+
 }
