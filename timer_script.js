@@ -30,14 +30,14 @@ class Timer {
 
     updateTotalTime(totalTime){
         this.totalTime = totalTime;
-        this.remainingTime = totalTime;
+        this.remainingTime = totalTime 
+
         if (totalTime == 0) {
           this.isCompleted = true;
         } else {
           this.isCompleted = false;
         }
     }
-
 
     // Start or resume the timer
     start() {
@@ -67,9 +67,25 @@ class Timer {
       }
     }
   
+    reset() {
+      this.startTime = null;
+      this.elapsedTime = 0;
+      this.remainingTime = this.totalTime;
+      this.isCompleted = (this.totalTime !== null && this.totalTime === 0);
+      this.isPaused = true;
+      this.pauseTimes = [];
+      this.restartTimes = [];
+      this.displayCallback();
+    }
+
     // Get the time remaining
     getTimeRemaining() {
       return this.remainingTime;
+    }
+
+    // get the time used
+    getElapsedTime() {
+      return this.elapsedTime;
     }
     checkCompleted() {
         return this.isCompleted;
@@ -105,7 +121,38 @@ class Timer {
       return this.restartTimes;
     }
   }
- 
+class RestTimer extends Timer {
+    constructor(totalTime) {
+      super(totalTime,'rest');
+          // check if the timer is unlimited - used if allow unlimited rest time
+          if (totalTime === null || totalTime === -1) {
+            this.totalTime = null; // ensure its set to null for consistency
+            this.remainingTime = null;
+            this.isUnlimited = true;
+          }
+    }
+
+    update() {
+        if (this.isUnlimited) {
+            return;
+        }
+        super.update();
+    }
+    updateTotalTime(totalTime){
+        if (totalTime === null || totalTime === -1) {
+            this.totalTime = null; // ensure its set to null for consistency
+            this.remainingTime = null;
+            this.isUnlimited = true;
+        } else {
+            this.totalTime = totalTime;
+            this.remainingTime = totalTime;
+            this.isUnlimited = false;
+            this.isCompleted = false; // reset completed status for new time
+        }
+    }
+
+  }
+
 class WritingTimer extends Timer {
     constructor(totalTime,timeType) {
       super(totalTime,timeType);
@@ -219,34 +266,49 @@ function disableSwitch() {
     
 }
 
-refershTime = 500;
+refershTime = 500; // decrease the number to increase refresh rate for smoother experience
+
+
 // !!!!!actual script!!!!!!
   // Initial call to display the time immediately on load
+  pause = true;
   updateCurrentTime();
-  const restTimer = new Timer(0,'rest');
-  const writingTimer = new WritingTimer(0,'writing');
 
-  document.getElementById('set_time').addEventListener('click', () => {
-    restTimer.updateTotalTime(calculateTotalTime('rest'));
+  setBtn = document.getElementById('set_time');
+  setBtn.addEventListener('click', () => {
+    restTimer = new RestTimer(calculateTotalTime('rest'),'rest');
     // console.log(restTimer);
-
     restTimer.displayCallback();
-    // console.log(restTimer);
 
-    writingTimer.updateTotalTime(calculateTotalTime('writing'));
+    writingTimer = new WritingTimer(calculateTotalTime('writing'),'writing');
     writingTimer.displayCallback();
-    writingTimer.start();
-    setInterval(updateTimers, refershTime);
-    const button = document.getElementById('set_time');
-    button.disabled = true;
-    setInterval(updateEndTime, refershTime);
-    setInterval(disableSwitch, refershTime);
-    document.getElementById('switch').disabled = false;
+    setBtn.textContent = "Reset time";
+    // TODO: prompt user to confirm reset if timers are already running
+  });
+
+  const pauseBtn = document.getElementById("pause");
+  pauseBtn.addEventListener('click', () => {
+    if (pause) {
+      writingTimer.start();
+      setInterval(updateTimers, refershTime);
+      setInterval(updateEndTime, refershTime);
+      setInterval(disableSwitch, refershTime);
+      document.getElementById('switch').disabled = false;
+      pause = false;
+      pauseBtn.textContent = "Pause both"; // Change button text to refelct that timer has started
+    } else {
+      writingTimer.pause();
+      restTimer.pause();
+      pause = true;
+      pauseBtn.textContent = "Resume"; // Change button text to refelct that timer is paused
+
+    }
+
   });
 
 
-
-  document.getElementById('switch').addEventListener('click', () => {
+  const switchBtn = document.getElementById("switch");
+  switchBtn.addEventListener('click', () => {
     const className = 'current';
 
     const writingTimeBlock = document.getElementById('writing_time');
@@ -257,12 +319,15 @@ refershTime = 500;
         writingTimer.pause()
         restTimeBlock.classList.add(className);
         writingTimeBlock.classList.remove(className);
+        switchBtn.textContent = "Change to writing time";
 
     } else {
         restTimer.pause()
         writingTimer.start()
         writingTimeBlock.classList.add(className);
         restTimeBlock.classList.remove(className);
+        switchBtn.textContent = "Change to rest time";
+
     }
 
   });

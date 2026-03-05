@@ -17,7 +17,9 @@
   <div>
     Resting time: <input type="number" name="hours" id="total_rest_hours"> hr <input type="number" name="minutes" id="total_rest_minutes"> mins
   </div>
-  <button class = "button" id="set_time">Start</button>
+  <button class = "button" id="set_time">Set time</button>
+  <button class = "button" id="pause">Start</button>
+
 </section>
 
 <section class="time">
@@ -67,15 +69,15 @@
     <h2>Writing Time Remaining</h2>
     <div class="time_display">
       <div class="counter_box ">
-        <p class="counter_time" id="writing_hours"></p>
+        <p class="counter_time" id="writing_hours">00</p>
       </div>
       <p class="dots">:</p>
       <div class="counter_box ">
-        <p class="counter_time" id="writing_minutes"></p>
+        <p class="counter_time" id="writing_minutes">00</p>
       </div>
       <p class="dots">:</p>
       <div class="counter_box ">
-        <p class="counter_time" id="writing_seconds"></p>
+        <p class="counter_time" id="writing_seconds">00</p>
       </div>
     </div>
 
@@ -85,15 +87,15 @@
     <h2>Rest Time Remaining</h2>
     <div class="time_display">
       <div class="counter_box ">
-        <p class="counter_time" id="rest_hours"></p>
+        <p class="counter_time" id="rest_hours">00</p>
       </div>
       <p class="dots">:</p>
       <div class="counter_box ">
-        <p class="counter_time" id="rest_minutes"></p>
+        <p class="counter_time" id="rest_minutes">00</p>
       </div>
       <p class="dots">:</p>
       <div class="counter_box ">
-        <p class="counter_time" id="rest_seconds"></p>
+        <p class="counter_time" id="rest_seconds">00</p>
       </div>
     </div>
 
@@ -115,7 +117,6 @@
       <div class="clock_box ">
         <p class="clock_time" id="end_seconds"></p>
     </div>
-    <button class = "button" disabled = "" id="pause">Pause</button>
   </div>
 
 </section>
