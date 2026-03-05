@@ -192,6 +192,7 @@ class WritingTimer extends Timer {
     writingTimer.update();
     if (!writingTimeBlock.classList.contains('shortTime') && writingTimer.shortInTime) {
         writingTimeBlock.classList.add('shortTime');
+        alert("You have thirty minutes left!");
 
     }
 
@@ -202,8 +203,9 @@ class WritingTimer extends Timer {
       if (!restTimer.checkCompleted()) {
         button.disabled = true;
         button.textContent = 'Exam ended';
-
       }
+      alert("The exam ends now!");
+
     }
   }
 
