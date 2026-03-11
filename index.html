@@ -15,7 +15,9 @@
     Writing time: <input type="number" name="hours" id="total_writing_hours"> hr <input type="number" name="minutes" id="total_writing_minutes"> mins
   </div>
   <div>
-    Resting time: <input type="number" name="hours" id="total_rest_hours"> hr <input type="number" name="minutes" id="total_rest_minutes"> mins
+    Rest time: <input type="number" name="hours" id="total_rest_hours"> hr <input type="number" name="minutes" id="total_rest_minutes"> mins
+    <br>
+    <input type="checkbox" id="unlimited_rest_time"> Unlimited Rest Time
   </div>
   <button class = "button" id="set_time">Set time</button>
   <button class = "button" id="pause">Start</button>
@@ -39,36 +41,14 @@
   </div>
 </section>
 
-  <!-- <div class="timer">
-    <h3>The challenge Lorem is in:</h3>
-    <div class="clock">
-      <div class="clock_box black-white">
-        <p class="clock_time" id="days"></p>
-        <p class="clock_duration">days</p>
-      </div>
-      <div class="clock_box ">
-        <p class="clock_time" id="hours"></p>
-        <p class="clock_duration">hours</p>
-      </div>
-      <p class="dots">:</p>
-      <div class="clock_box ">
-        <p class="clock_time" id="minutes"></p>
-        <p class="clock_duration">minutes</p>
-      </div>
-      <p class="dots">:</p>
-      <div class="clock_box ">
-        <p class="clock_time" id="seconds"></p>
-        <p class="clock_duration">seconds</p>
-      </div>
-
-    </div>
-  </div> -->
-
 <section class="timers">
   <div class="timer_block current" id="writing_time">
-    <h2>Writing Time Remaining</h2>
+    <div class="title-row">
+      <h2 id="writing_header">Writing Time Remaining</h2>
+      <button id="writing_switch">Show Used</button>
+    </div>
     <div class="time_display">
-      <div class="counter_box ">
+      <div class="counter_box">
         <p class="counter_time" id="writing_hours">00</p>
       </div>
       <p class="dots">:</p>
@@ -84,8 +64,10 @@
   </div>
 
   <div class="timer_block" id="rest_time">
-    <h2>Rest Time Remaining</h2>
-    <div class="time_display">
+    <div class="title-row">
+      <h2 id="rest_header">Rest Time Remaining</h2>
+      <button id="rest_switch">Show Used</button>
+    </div>    <div class="time_display">
       <div class="counter_box ">
         <p class="counter_time" id="rest_hours">00</p>
       </div>

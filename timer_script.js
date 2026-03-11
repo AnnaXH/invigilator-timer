@@ -1,5 +1,6 @@
 // Copyright (C) 2024  Anna Hu
 
+const msph = 1000 * 60 * 60;
 
 class Timer {
     constructor(totalTime,timerType) {
@@ -8,31 +9,58 @@ class Timer {
       this.startTime = null; // The time when the timer was started
       this.elapsedTime = 0; // Time elapsed in milliseconds
       this.remainingTime = totalTime; // Time remaining in milliseconds
+      this.displayRemain = true; // Flag to indicate if the remaining time should be displayed
       this.isCompleted = false; // Flag to indicate if the timer is completed
       this.isPaused = true; // Flag to indicate if the timer is paused
-      this.timerId = null; // Reference to the setInterval for the timer
+      this.timerId = null; // not used yet - placeholder for functionality related to multiple timers
       this.pauseTimes = []; // Array to track pause times
       this.restartTimes = []; // Array to track restart times
 
+      // check if the timer is unlimited - used if allow unlimited rest time
+      if (totalTime === null || totalTime === -1) {
+        this.totalTime = null; // ensure its set to null for consistency
+        this.remainingTime = null;
+        this.isUnlimited = true;
+      }
+      else {
+        this.isUnlimited = false;
+      }
+
     }
+    
+    getDisplayTime(timeMs) {
+      if (timeMs == null) return ['--','--','--'];
+      const hours = Math.floor(timeMs / 3600000);
+      const minutes = Math.floor(timeMs % 3600000 / 60000);
+      const seconds = Math.floor(timeMs % 60000 / 1000);
+      return [String(hours).padStart(2,'0'), String(minutes).padStart(2,'0'), String(seconds).padStart(2,'0')];
+    };
 
     displayCallback(){// Callback to update the display
         // console.log(this.timerType, this.remainingTime);
-        const msph = 1000 * 60 * 60;
-        const hours = Math.floor(this.remainingTime / msph);
-        const minutes = Math.floor(this.remainingTime % msph / (1000 * 60));
-        const seconds = Math.floor(this.remainingTime % (msph/60) / 1000);
+        let displayTimeMs;
+        if (this.displayRemain) {
+          displayTimeMs = this.remainingTime;
+        } else {
+          displayTimeMs = this.elapsedTime;
+        }
+        const [hours, minutes, seconds] = this.getDisplayTime(displayTimeMs);
         // console.log(this.timerType+'_hours');
-        document.getElementById(this.timerType+'_hours').textContent = String(hours).padStart(2, '0');
-        document.getElementById(this.timerType+'_minutes').textContent = String(minutes).padStart(2, '0');
-        document.getElementById(this.timerType+'_seconds').textContent = String(seconds).padStart(2, '0');
-      }; 
+        document.getElementById(this.timerType+'_hours').textContent = hours;
+        document.getElementById(this.timerType+'_minutes').textContent = minutes;
+        document.getElementById(this.timerType+'_seconds').textContent = seconds;
+    }
 
     updateTotalTime(totalTime){
         this.totalTime = totalTime;
         this.remainingTime = totalTime 
 
-        if (totalTime == 0) {
+        if (totalTime === null || totalTime === -1) {
+          this.totalTime = null; // ensure its set to null for consistency
+          this.remainingTime = null;
+          this.isUnlimited = true;
+          this.isCompleted = false;
+      } else if(totalTime == 0) {
           this.isCompleted = true;
         } else {
           this.isCompleted = false;
@@ -45,11 +73,11 @@ class Timer {
   
       if (!this.isPaused) {
         this.startTime = Date.now();
-      } else {
+      } else {// recovering from pause - adjust start time to account for elapsed time before pause
         this.startTime = Date.now() - this.elapsedTime;
         this.isPaused = false;
       }
-    //   console.log(this.timerType, this.startTime,this.remainingTime)
+    //  console.log(this.timerType, this.startTime,this.remainingTime, this.elapsedTime)
       this.restartTimes.push(this.startTime);
 
     //   this.timerId = setInterval(() => {
@@ -95,10 +123,16 @@ class Timer {
       if (this.isPaused || this.isCompleted){
         // console.log(this.timerType, 'pausing or ending');
         return;
-      }
+      }else if (this.isUnlimited) {
+        // console.log(this.timerType, 'unlimited');
+        this.elapsedTime = Date.now() - this.startTime;
+        this.displayCallback();
+        return;
+      } else {
     //   console.log(this.timerType, 'continuing');
-      this.elapsedTime = Date.now() - this.startTime;
-      this.remainingTime = this.totalTime - this.elapsedTime;
+        this.elapsedTime = Date.now() - this.startTime;
+        this.remainingTime = this.totalTime - this.elapsedTime;
+      }
     //   console.log(this.timerType,this.elapsedTime, this.remainingTime);
 
   
@@ -110,7 +144,15 @@ class Timer {
       }
       this.displayCallback();
     }
-  
+    
+    checkDisplayRemain() {
+      return this.displayRemain;
+    }
+
+    changeDisplayRemain() {
+      this.displayRemain = !this.displayRemain;
+    }
+
     // Get the pause times
     getPauseTimes() {
       return this.pauseTimes;
@@ -120,37 +162,6 @@ class Timer {
     getRestartTimes() {
       return this.restartTimes;
     }
-  }
-class RestTimer extends Timer {
-    constructor(totalTime) {
-      super(totalTime,'rest');
-          // check if the timer is unlimited - used if allow unlimited rest time
-          if (totalTime === null || totalTime === -1) {
-            this.totalTime = null; // ensure its set to null for consistency
-            this.remainingTime = null;
-            this.isUnlimited = true;
-          }
-    }
-
-    update() {
-        if (this.isUnlimited) {
-            return;
-        }
-        super.update();
-    }
-    updateTotalTime(totalTime){
-        if (totalTime === null || totalTime === -1) {
-            this.totalTime = null; // ensure its set to null for consistency
-            this.remainingTime = null;
-            this.isUnlimited = true;
-        } else {
-            this.totalTime = totalTime;
-            this.remainingTime = totalTime;
-            this.isUnlimited = false;
-            this.isCompleted = false; // reset completed status for new time
-        }
-    }
-
   }
 
 class WritingTimer extends Timer {
@@ -172,19 +183,6 @@ class WritingTimer extends Timer {
       }
     }
   }
-
-//   // Pause the timer again after another 20 seconds
-//   setTimeout(() => {
-//     myTimer.pause();
-//     console.log("Timer paused at:", myTimer.getPauseTimes());
-//     console.log("Time remaining after second pause:", myTimer.getTimeRemaining());
-//   }, 35000);
-  
-//   // Resume the timer again after another 5 seconds
-//   setTimeout(() => {
-//     myTimer.start();
-//     console.log("Timer restarted at:", myTimer.getRestartTimes());
-//   }, 40000);
 
   function updateTime(time,display_type) {
     const hours = String(time.getHours()).padStart(2, '0');
@@ -256,7 +254,6 @@ class WritingTimer extends Timer {
     }
   }
 
-
 function disableSwitch() {
     const button = document.getElementById('switch');
     if (restTimer.checkCompleted()) {
@@ -266,32 +263,42 @@ function disableSwitch() {
     
 }
 
-refershTime = 500; // decrease the number to increase refresh rate for smoother experience
+refershTime = 300; // decrease the number to increase refresh rate for smoother experience
 
 
 // !!!!!actual script!!!!!!
   // Initial call to display the time immediately on load
   pause = true;
   updateCurrentTime();
+  const pauseBtn = document.getElementById("pause");
+  const setBtn = document.getElementById('set_time');
+  const writingUsedBtn = document.getElementById('writing_switch');
+  const restUsedBtn = document.getElementById('rest_switch');
 
-  setBtn = document.getElementById('set_time');
+
   setBtn.addEventListener('click', () => {
-    restTimer = new RestTimer(calculateTotalTime('rest'),'rest');
+    if (document.getElementById('unlimited_rest_time').checked) {
+      restTime = null;
+    } else {
+      restTime = calculateTotalTime('rest');
+    }
+
+    restTimer = new Timer(restTime,'rest');
     // console.log(restTimer);
     restTimer.displayCallback();
 
     writingTimer = new WritingTimer(calculateTotalTime('writing'),'writing');
     writingTimer.displayCallback();
     setBtn.textContent = "Reset time";
+    setInterval(updateEndTime, refershTime);
+    pauseBtn.textContent = "Start"; // refresh text in case the timer was reset
     // TODO: prompt user to confirm reset if timers are already running
   });
 
-  const pauseBtn = document.getElementById("pause");
   pauseBtn.addEventListener('click', () => {
     if (pause) {
       writingTimer.start();
       setInterval(updateTimers, refershTime);
-      setInterval(updateEndTime, refershTime);
       setInterval(disableSwitch, refershTime);
       document.getElementById('switch').disabled = false;
       pause = false;
@@ -304,6 +311,28 @@ refershTime = 500; // decrease the number to increase refresh rate for smoother 
 
     }
 
+  });
+
+  const switchDisplayType = (timer, button, header, timerText) => {
+    if (timer.checkDisplayRemain()) {
+      button.textContent = "Show Remaining";
+      header.textContent = timerText + " Time Used";
+    } else {
+      button.textContent = "Show Used";
+      header.textContent = timerText + " Time Remaining";
+    }
+    timer.changeDisplayRemain();
+    timer.displayCallback();
+  };
+
+  const writingHeader = document.getElementById('writing_header');
+  writingUsedBtn.addEventListener('click', () => {
+    switchDisplayType(writingTimer, writingUsedBtn, writingHeader, "Writing");
+  });
+
+  const restHeader = document.getElementById('rest_header');
+  restUsedBtn.addEventListener('click', () => {
+    switchDisplayType(restTimer, restUsedBtn, restHeader, "Rest");
   });
 
 

@@ -45,16 +45,17 @@ Prerequisite:
    - When the time is up the entire page will turn to dark purple to indicate you need to announce the end of the exam.
 
 4. **Changing between timers:**
-   - When the candidate requests a break, press the `Change to rest / writing` button to switch to the rest timer. The countdown for the exam time will be paused and the countdown for the rest time will start.
+   - When the candidate requests a break, press the `Change to rest` button to switch to the rest timer. The countdown for the exam time will be paused and the countdown for the rest time will start.
    - If the candidate wishes to resume writing, click this button again to switch back to the writing timer.
    - The rest timer will be stop and the writing timer will resume when there is no resting time remaining. The button to switch will also be disabled.
 
-
 ## Known issues
-- the only way to reset the timer is to refresh the page
 
-## Work in progress:
-- allow display of the used time as well as the remaining time
-- enable pausing of the exam (possibly due to emergencies such as fire alarm)
+- when paused both change to reset/writing time button does not work as intended
+- No confirmation when reset timer
+- UI need improvement especially on responsive design
+
+## Work in progress
+
 - display the exam log of pausing and resuming (useful for timing yourself)
 - calculator for the times from exam arrangement: normally this is provided but in some case you need to work out by yourself, which might be painful...
